@@ -1,0 +1,7 @@
+
+lab.py
+notes.txt
+card_credit_fraud.csv
+
+*.pyc
+__pycache__/

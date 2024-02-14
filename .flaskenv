@@ -1,0 +1,2 @@
+FLASK_APP=fraud.py
+FLASK_DEBUG=1
