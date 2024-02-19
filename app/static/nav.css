@@ -1,0 +1,41 @@
+
+nav {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    padding: 0 20px;
+    background: var(--white);
+}
+
+.logo {
+    width: 64px;
+    height: 64px;
+}
+
+.left_navbar {
+    display: flex;
+    align-items: center;
+}
+
+.left_navbar > span {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.right_navbar {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.right_navbar > a > button {
+    padding: 10px 20px;
+    font-size: 20px;
+    background: var(--blue);
+    color: var(--white);
+    font-weight: bold;
+}
+
