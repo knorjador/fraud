@@ -43,12 +43,21 @@
 }
 
 .speech {
+    width: 100%;
+    text-align: center;
     text-transform: uppercase;
     padding: 40px 0px;
     font-size: 30px;
     font-weight: bold;
     color: var(--white);
 }
+
+@media (max-width: 1024px) { 
+    .speech {
+        font-size: 20px;
+    }
+}
+
 
 /*  
 

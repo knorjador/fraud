@@ -32,10 +32,11 @@ nav {
 }
 
 .right_navbar > a > button {
-    padding: 10px 20px;
+    padding: 5px 20px;
     font-size: 20px;
     background: var(--blue);
     color: var(--white);
     font-weight: bold;
+    border-radius: 20px;
 }
 
