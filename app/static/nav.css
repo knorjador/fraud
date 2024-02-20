@@ -31,6 +31,13 @@ nav {
     padding-right: 10px;
 }
 
+.right_navbar > span {
+    margin-right: 40px;
+    font-weight: bold;
+    font-style: italic;
+    color: var(--dark)
+}
+
 .right_navbar > a > button {
     padding: 5px 20px;
     font-size: 20px;
@@ -40,3 +47,13 @@ nav {
     border-radius: 20px;
 }
 
+.menu {
+    margin-left: 30px;
+    font-weight: 'normal';
+    font-size: 18px;
+}
+
+.menu:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

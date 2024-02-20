@@ -2,6 +2,7 @@
 lab.py
 notes.txt
 notebooks/card_credit_fraud.csv
+app.db
 
 *.pyc
 __pycache__/

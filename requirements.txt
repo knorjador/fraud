@@ -3,3 +3,8 @@ pandas
 matplotlib
 scikit-learn
 dash
+flask_login
+flask_migrate
+flask_sqlalchemy
+sqlalchemy
+werkzeug
