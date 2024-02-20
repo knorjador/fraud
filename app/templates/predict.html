@@ -8,6 +8,64 @@
 
 {% block content %}
     <div class="wrapper">
-        <h1>Predict Page</h1>
+        <h1>Pour faire une détection de fraude, veuillez remplir les champs :</h1>
+    </div>
+    <div>
+        <label for="step">
+            L'heure de transaction
+        </label>
+        <input id="step" type="number" name="step" />
+    </div>
+    <div>
+        <label>
+            Type de transaction
+        </label>
+        <select>
+            <option value="1">Retrait</option>
+            <option value="4">Transfert</option>
+        </select>
+
+    </div>
+    <div>
+        <label for="amount">
+            Montant de transaction
+        </label>
+        <input id="amount" type="number" name="amount" />
+    </div>
+    <div>
+        <label for="nameOrg">
+            Compte d'expéditeur
+        </label>
+        <input id="nameOrg" type="text" name="nameOrg" />
+    </div>
+    <div>
+        <label for="oldbalanceOrg">
+            Ancien sode de l'expéditeur
+        </label>
+        <input id="oldbalanceOrg" type="number" name="oldbalanceOrg" />
+    </div>
+    <div>
+        <label for="newbalanceOrg">
+            Nouveau solde de l'expéditeur
+        </label>
+        <input id="newbalanceOrg" type="number" name="newbalanceOrg" />
+    </div>
+    <div>
+        <label for="nameDest">
+            Compte du destinataire
+        </label>
+        <input id="nameDest" type="text" name="nameDest" />
+    </div>
+    <div>
+        <label for="oldbalanceDest">
+            Ancien solde du destinataire
+        </label>
+        <input id="oldbalanceDest" type="number" name="oldbalanceDest" />
+    </div>
+    <div>
+        <label for="newbalanceDest">
+            Nouveau solde du destinataire
+        </label>
+        <input id="newbalanceDest" type="number" name="newbalanceDest" />
     </div>
 {% endblock %}
