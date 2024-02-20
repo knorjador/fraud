@@ -19,7 +19,7 @@ nav {
     align-items: center;
 }
 
-.left_navbar > span {
+.brand {
     font-size: 25px;
     font-weight: bold;
 }
@@ -31,7 +31,7 @@ nav {
     padding-right: 10px;
 }
 
-.right_navbar > span {
+.employee_email {
     margin-right: 40px;
     font-weight: bold;
     font-style: italic;
@@ -56,4 +56,10 @@ nav {
 .menu:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+@media (max-width: 1024px) { 
+    .brand, .employee_email {
+        display: none;
+    }
 }

@@ -1,13 +1,13 @@
 <nav>
     <div class="left_navbar">
         <img class="logo" src="{{ url_for('static', filename='img/logo.webp') }}" />
-        <span>FrauDetect</span>
+        <span class="brand">FrauDetect</span>
         <a href="{{ menu_href }}">
             <span class="menu">{{ menu }}</span>
         </a>
     </div>
     <div class="right_navbar">
-        <span>{{ email }}</span>
+        <span class="employee_email">{{ email }}</span>
         <a href="{{ href }}">
             <button>{{ button }}</button>
         </a>
