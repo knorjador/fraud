@@ -40,9 +40,12 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        confirm = request.form['confirm']
         time.sleep(2)
-        if email == "" or password == "":
+        if email == "" or password == "" or confirm == "":
             return redirect(url_for('register', e='0'))
+        if (password != confirm)
+            return redirect(url_for('register', e='2'))
         employee = db.session.scalar(sa.select(Employee).where(Employee.email == email))
         if employee is None:
             employee = Employee(email=email)

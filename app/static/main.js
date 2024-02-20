@@ -28,7 +28,10 @@ window.addEventListener('load', () => {
             message = 'Une erreur est survenue'    
         } else if (parameters.e === '1') {
             message = 'Identifiants incorrects'    
+        } else if (parameters.e === '2') {
+            message = 'Les mots de passe sont différents'    
         }
+
 
         form_message.innerText = message
 
