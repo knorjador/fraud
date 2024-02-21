@@ -1,10 +1,11 @@
 flask
 pandas
 matplotlib
-scikit-learn
+scikit-learn==1.4.0
 dash
 flask_login
 flask_migrate
 flask_sqlalchemy
 sqlalchemy
 werkzeug
+numpy

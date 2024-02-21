@@ -7,6 +7,14 @@ const submitCredentials = () => {
     loading.style.display = 'flex'
 }
 
+const submitPredict = () => {
+    const form = document.getElementById('wrapper_predict_form'),
+        loading = document.getElementById('loading')
+    
+    form.style.display = 'none'
+    loading.style.display = 'flex'
+}
+
 window.addEventListener('load', () => {
 
     const queryString = window.location.search,
@@ -30,8 +38,9 @@ window.addEventListener('load', () => {
             message = 'Identifiants incorrects'    
         } else if (parameters.e === '2') {
             message = 'Les mots de passe sont différents'    
+        } else if (parameters.e === '3') {
+            message = 'Les champs ne sont pas bien remplis'    
         }
-
 
         form_message.innerText = message
 

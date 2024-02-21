@@ -1,0 +1,27 @@
+
+.wrapper_dashboard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    color: var(--white)
+}
+
+th {
+    color: var(--dark)
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}

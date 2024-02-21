@@ -7,4 +7,4 @@ migrations/
 
 *.pyc
 __pycache__/
-
+.venv/

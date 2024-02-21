@@ -1,14 +1,53 @@
 {% extends "base.html" %}
 {% set menu = 'Réaliser une prédiction' %}
 {% set menu_href = '/predict' %}
-{% set href = '/' %}
+{% set href = '/logout' %}
 {% set button = 'Déconnexion' %}
 {% include 'navbar.html' %}
 
 {% block content %}
     <div class="wrapper">
-        <h1>Dashboard Page</h1>
-        <iframe src="/dash/" width="100%" height="400" frameborder="0"></iframe>
+        <h1>Historique des transactions</h1>
+        <div class="wrapper_dashboard">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Montant</th>
+                        <th>Ancienne balance expéditeur</th>
+                        <th>Nouvelle balance expéditeur</th>
+                        <th>Nouvelle balance destinataire</th>
+                        <th>Fraude</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.id }}</td>
+                            <td>
+                                {% if transaction.kind == 1 %}
+                                    Retrait
+                                {% elif transaction.kind == 4 %}
+                                    Transfert
+                                {% endif %}
+                            </td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.oldbalanceOrg }}</td>
+                            <td>{{ transaction.newbalanceOrg }}</td>
+                            <td>{{ transaction.newbalanceDest }}</td>
+                            <td>
+                                {% if transaction.fraud == False %}
+                                    Non
+                                {% elif transaction.kind == True %}
+                                    Oui
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 {% endblock %}
