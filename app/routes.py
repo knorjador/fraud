@@ -1,13 +1,18 @@
 
+import os
 import flask
 import time
+import sklearn
+import pickle
+import pandas as pd
+import numpy as np
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 import sqlalchemy as sa
 from datetime import datetime, timezone
 from urllib.parse import urlsplit
 from app import app, db
-from app.models import Employee
+from app.models import Employee, Transaction
 
 @app.before_request
 def before_request():
@@ -17,6 +22,8 @@ def before_request():
 
 @app.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('predict'))
     return flask.render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -55,16 +62,75 @@ def register():
             return redirect(url_for('login'))
     return flask.render_template('register.html')
 
+def processPrediction(data):
+    loaded_model = pickle.load(open("model.pkl", "rb"))
+    result = loaded_model.predict(data)
+    return result[0]
+
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
+    if request.method == 'POST':
+        kind = request.form['kind']
+        amount = request.form['amount']
+        oldbalanceOrg = request.form['oldbalanceOrg']
+        newbalanceOrg = request.form['newbalanceOrg']
+        newbalanceDest = request.form['newbalanceDest']
+        step = request.form['step']
+        nameOrg = request.form['nameOrg']
+        nameDest = request.form['nameDest']
+        oldbalanceDest = request.form['oldbalanceDest']
+
+        if (amount == "" or oldbalanceOrg == "" or newbalanceOrg == "" or newbalanceDest == ""):
+            return redirect(url_for('predict', e='3'))
+
+        kind = int(request.form['kind'])
+        amount = float(request.form['amount'])
+        oldbalanceOrg = float(request.form['oldbalanceOrg'])
+        newbalanceOrg = float(request.form['newbalanceOrg'])
+        newbalanceDest = float(request.form['newbalanceDest'])
+        step = 0 if step == "" else int(request.form['step'])
+        nameOrg = request.form['nameOrg']
+        nameDest = request.form['nameDest']
+        oldbalanceDest = 0.0 if oldbalanceDest == "" else float(request.form['oldbalanceDest'])
+
+        type_cashout = (kind == 1)
+        type_transfer = (kind == 4)
+
+        result = processPrediction([[amount, type_cashout, type_transfer, oldbalanceOrg, newbalanceOrg, newbalanceDest]])
+
+        transaction = Transaction(
+            kind=kind,
+            amount=amount, 
+            oldbalanceOrg=oldbalanceOrg, 
+            newbalanceOrg=newbalanceOrg,
+            newbalanceDest=newbalanceDest,
+            step=step,
+            nameOrg=nameOrg,
+            nameDest=nameDest,
+            oldbalanceDest=oldbalanceDest, 
+            fraud=result,
+            employee_id=current_user.id
+        )
+        db.session.add(transaction)
+        db.session.commit()
+
+        time.sleep(2)
+        return redirect(url_for('dashboard'))
+
     if current_user.is_authenticated:
         return flask.render_template('predict.html', email=current_user.email)
     return redirect(url_for('index'))
 
 @app.route('/dashboard')
 def dashboard():
+    query = (
+        db.session.query(Transaction)
+        .filter_by(employee_id=current_user.id)
+        .order_by(sa.desc(Transaction.timestamp))
+    )
+    transactions = query.all()
     if current_user.is_authenticated:
-        return flask.render_template('dashboard.html', email=current_user.email)
+        return flask.render_template('dashboard.html', email=current_user.email, transactions=transactions)
     return redirect(url_for('index'))
 
 @app.route('/logout')

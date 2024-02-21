@@ -34,7 +34,7 @@ nav {
 .employee_email {
     margin-right: 40px;
     font-weight: bold;
-    font-style: italic;
+    /* font-style: italic; */
     color: var(--dark)
 }
 
