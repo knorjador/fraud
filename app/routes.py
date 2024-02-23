@@ -6,7 +6,10 @@ import sklearn
 import pickle
 import pandas as pd
 import numpy as np
-from flask import render_template, flash, redirect, url_for, request
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib.pyplot as plt
+from io import BytesIO
+from flask import render_template, flash, redirect, url_for, request, Response
 from flask_login import login_user, logout_user, current_user, login_required
 import sqlalchemy as sa
 from datetime import datetime, timezone
@@ -121,19 +124,58 @@ def predict():
         return flask.render_template('predict.html', email=current_user.email)
     return redirect(url_for('index'))
 
+
+@app.route('/plot.png')
+def plot():
+    no_fraud = int(request.args.get('n', 50))
+    fraud = int(request.args.get('y', 50))
+
+    try:
+        fig, ax = plt.subplots()
+        labels = ['Non fraude', 'Fraude']
+        sizes = [no_fraud, fraud]
+        colors = ['#1F95A7', 'lightcoral']
+        plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
+        plt.title('Répartition des transactions')
+        plt.axis('equal')
+        plt.legend(labels, title='Légende', loc='upper right')
+
+        img_stream = BytesIO()
+        plt.savefig(img_stream, format='png')
+        img_stream.seek(0)
+
+        return Response(img_stream, content_type='image/png')
+    except Exception as e:
+        return str(e)
+
 @app.route('/dashboard')
 def dashboard():
-    query = (
-        db.session.query(Transaction)
-        .filter_by(employee_id=current_user.id)
-        .order_by(sa.desc(Transaction.timestamp))
-    )
-    transactions = query.all()
     if current_user.is_authenticated:
-        return flask.render_template('dashboard.html', email=current_user.email, transactions=transactions)
+        query = (
+            db.session.query(Transaction)
+            .filter_by(employee_id=current_user.id)
+            .order_by(sa.desc(Transaction.timestamp))
+        )
+        transactions = query.all()
+        no_fraud = 0
+        fraud = 0
+        total_transactions = 0
+        total_amount = 0
+        total_fraud = 0
+        for x in transactions:
+            total_transactions += 1
+            total_amount += x.amount
+            if x.fraud == False:
+                no_fraud += 1 
+            else: 
+                fraud += 1
+                total_fraud += x.amount
+        img_url = url_for('plot', n=no_fraud, y=fraud)
+        return flask.render_template('dashboard.html', email=current_user.email, transactions=transactions, img_url=img_url, fraud=fraud, total_amount=total_amount, total_fraud=total_fraud, total_transactions=total_transactions)
     return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
