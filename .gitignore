@@ -1,7 +1,10 @@
 
 lab.py
 notes.txt
-card_credit_fraud.csv
+notebooks/card_credit_fraud.csv
+app.db
+migrations/
 
 *.pyc
 __pycache__/
+.venv/

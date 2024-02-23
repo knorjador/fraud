@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% set menu = 'Réaliser une prédiction' %}
+{% set menu_href = '/predict' %}
+{% set href = '/logout' %}
+{% set button = 'Déconnexion' %}
+{% include 'navbar.html' %}
+
+{% block content %}
+    <div class="wrapper">
+        <h1 class="historic">Historique des transactions</h1>
+        <div class="wrapper_dashboard">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Montant</th>
+                        <th>Ancienne balance expéditeur</th>
+                        <th>Nouvelle balance expéditeur</th>
+                        <th>Nouvelle balance destinataire</th>
+                        <th>Fraude</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr class="{{ 'tr_no_fraud' if not transaction.fraud else 'tr_fraud' }}">
+                            <td>{{ transaction.id }}</td>
+                            <td>
+                                {% if transaction.kind == 1 %}
+                                    Retrait
+                                {% elif transaction.kind == 4 %}
+                                    Transfert
+                                {% endif %}
+                            </td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.oldbalanceOrg }}</td>
+                            <td>{{ transaction.newbalanceOrg }}</td>
+                            <td>{{ transaction.newbalanceDest }}</td>
+                            <td>
+                                {% if transaction.fraud == False %}
+                                    <span class="no_fraud">Non</span>
+                                {% elif transaction.fraud == True %}
+                                    <span class="fraud">Oui</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="graph">
+                {% if total_transactions > 0 %}
+                    <img src="{{ img_url }}" alt="Répartition des transactions">
+                {% endif %}
+                <div class="amount_data">
+                    <p>Total transactions : <b>{{ total_transactions }}</b></p>
+                    <p>Total montant des transactions : <b>{{ total_amount }}</b></p>
+                    <p>Total montant des fraudes : <b>{{ total_fraud }}</b></p>
+                    {% if total_amount > 0 %}
+                        <p>Ratio de fraude : <b>{{ "{:.2f}".format(total_fraud * 100 / total_amount) }}%</b></p>
+                    {% else %}
+                        <p>Ratio : <b>0%</b></p>
+                    {% endif %}
+                    {% if fraud > 0 %}
+                        <p>Montant moyen d'une fraude : <b>{{ "{:.2f}".format(total_fraud / fraud) }}</b></p>
+                    {% else %}
+                        <p>Montant moyen d'une fraude : <b>0</b></p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+
+nav {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    padding: 0 20px;
+    background: var(--white);
+}
+
+.logo {
+    width: 64px;
+    height: 64px;
+}
+
+.left_navbar {
+    display: flex;
+    align-items: center;
+}
+
+.brand {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.right_navbar {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.employee_email {
+    margin-right: 40px;
+    font-weight: bold;
+    /* font-style: italic; */
+    color: var(--dark)
+}
+
+.right_navbar > a > button {
+    padding: 5px 20px;
+    font-size: 20px;
+    background: var(--blue);
+    color: var(--white);
+    font-weight: bold;
+    border-radius: 20px;
+}
+
+.menu {
+    margin-left: 30px;
+    font-weight: 'normal';
+    font-size: 18px;
+}
+
+.menu:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) { 
+    .brand, .employee_email {
+        display: none;
+    }
+}

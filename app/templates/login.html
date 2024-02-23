@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% set href = '/' %}
+{% set button = 'Accueil' %}
+{% include 'navbar.html' %}
+{% set form_action = '/login' %}
+{% set form_href = '/register' %}
+{% set form_button = 'Me connecter' %}
+{% set form_question = 'Pas encore inscrit ?' %}
+{% set form_link = 'Inscription' %}
+
+{% block content %}
+    {% include 'form_credentials.html' %}
+{% endblock %}

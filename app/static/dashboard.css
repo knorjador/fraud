@@ -1,0 +1,78 @@
+
+.historic {
+    margin-top: -80px;
+}
+
+.wrapper_dashboard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    color: var(--white)
+}
+
+th {
+    color: var(--dark)
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.graph {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 80px 0px;
+}
+
+.graph > img {
+    margin-bottom: 0px;
+}
+
+.tr_fraud {
+    background: lightcoral;
+}
+
+.no_fraud {
+    font-weight: bold;
+    color: var(--blue) 
+}
+
+.fraud {
+    font-weight: bold;
+    color: red
+}
+
+.amount_data {
+    margin-left: 80px;
+    color: var(--white);
+}
+
+.amount_data > p {
+    color: var(--white);
+    font-size: 21px;
+}
+
+@media (max-width: 1024px) { 
+    .graph {
+        flex-direction: column;
+    }
+
+    .graph > img {
+        margin-bottom: 80px;
+    }
+}
